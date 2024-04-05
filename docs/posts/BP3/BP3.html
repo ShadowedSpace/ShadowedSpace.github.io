@@ -447,7 +447,7 @@ background-size: cover;
 </div>
 </div>
 <p>This plot begins to unravel some underlying racial bias that could be present in the algorithm. As seen in the figure, the orange dots representing white patients lie on a higher curve of percentile risk score. This suggests that less sick white patients are more likely to be referred to a high-risk program than sicker black patients.</p>
-<div id="cell-6" class="cell" data-execution_count="55">
+<div id="cell-6" class="cell" data-execution_count="66">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, sharey <span class="op">=</span> <span class="va">True</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>grouped_cost_data <span class="op">=</span> pd.DataFrame(df_imp.groupby([<span class="st">'risk_percentile'</span>, <span class="st">'race'</span>])[<span class="st">'cost_t'</span>].mean())</span>
@@ -460,7 +460,8 @@ background-size: cover;
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Percentile Risk Score'</span>)</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Number of Chronic Illnesses'</span>)</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">80000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">600</span>, <span class="dv">120000</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plt.yscale(<span class="st">"log"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">

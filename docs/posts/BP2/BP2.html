@@ -750,34 +750,64 @@ background-size: cover;
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_score(X, w):</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> X<span class="op">@</span>w</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-24" class="cell" data-execution_count="33">
+<div id="cell-24" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>X_train[<span class="st">'score'</span>] <span class="op">=</span> calc_score(X_train[cols_rfe], w)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>X_train[<span class="st">'score'</span>].head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="33">
-<pre><code>1    -2.724145
-2    -0.435472
-3    -0.913722
-4    -0.552180
-6    -0.294372
-7    -1.078671
-8    -1.328416
-9    -0.866993
-10   -0.086189
-11   -0.080296
-12   -0.207142
-13   -4.709531
-14   -1.492597
-15   -0.059797
-16   -2.525174
-17   -2.025183
-18   -1.236856
-19   -2.458977
-20   -0.508184
-21   -1.859404
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>X_train[<span class="st">'score'</span>].head(<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<pre><code>1     -2.724145
+2     -0.435472
+3     -0.913722
+4     -0.552180
+6     -0.294372
+7     -1.078671
+8     -1.328416
+9     -0.866993
+10    -0.086189
+11    -0.080296
+12    -0.207142
+13    -4.709531
+14    -1.492597
+15    -0.059797
+16    -2.525174
+17    -2.025183
+18    -1.236856
+19    -2.458977
+20    -0.508184
+21    -1.859404
+22    -2.383166
+23    -0.983590
+24    -2.104489
+25     0.116204
+27    -1.457767
+28    -2.093814
+29    -0.827445
+30    -1.850373
+31    -3.275786
+32    -0.108589
+33    -2.864712
+34    -1.135210
+35     0.061924
+36    -1.133178
+37    -1.356546
+38    -2.512256
+39    -3.806445
+40    -1.368826
+41    -0.917605
+42    -0.545074
+43    -1.235283
+44    -0.888178
+45    -1.572517
+46    -2.458977
+47    -1.861047
+48    -2.606534
+49    -0.899814
+50     0.432424
+51   -11.106489
+52    -3.844350
 Name: score, dtype: float64</code></pre>
 </div>
 </div>
-<div id="cell-25" class="cell" data-execution_count="32">
+<div id="cell-25" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>X_train[<span class="st">'profit'</span>] <span class="op">=</span> X_train[<span class="st">"loan_amnt"</span>]<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.25</span><span class="op">*</span>X_train[<span class="st">"loan_int_rate"</span>] <span class="op">*</span> <span class="fl">0.01</span>)<span class="op">**</span><span class="dv">10</span> <span class="op">-</span> X_train[<span class="st">"loan_amnt"</span>]</span>
@@ -790,284 +820,31 @@ Name: score, dtype: float64</code></pre>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">21</span>):</span>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> <span class="fl">1.0</span><span class="op">*</span>(X_train[<span class="st">'score'</span>] <span class="op">&gt;</span> t)</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(y_pred)</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#if score &lt;= t, they get the loan</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    profit <span class="op">=</span> (((y_pred <span class="op">!=</span> y_train) <span class="op">*</span> (y_pred <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> <span class="op">-</span>X_train[<span class="st">'cost'</span>]) <span class="op">+</span> ((y_pred <span class="op">==</span> y_train) <span class="op">*</span> (y_pred <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> X_train[<span class="st">'profit'</span>])).<span class="bu">sum</span>()</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    acc <span class="op">=</span> (y_pred <span class="op">==</span> y_train).mean()</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"A threshold of </span><span class="sc">{</span>t<span class="sc">:.2f}</span><span class="ss"> gives an accuracy of </span><span class="sc">{</span>acc<span class="sc">:.2f}</span><span class="ss"> and an average profit of </span><span class="sc">{</span>profit<span class="sc">:.0f}</span><span class="ss">."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#if score &lt;= t, they get the loan</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    profit <span class="op">=</span> (((y_pred <span class="op">!=</span> y_train) <span class="op">*</span> (y_pred <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> <span class="op">-</span>X_train[<span class="st">'cost'</span>]) <span class="op">+</span> ((y_pred <span class="op">==</span> y_train) <span class="op">*</span> (y_pred <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> X_train[<span class="st">'profit'</span>])).<span class="bu">sum</span>()</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    acc <span class="op">=</span> (y_pred <span class="op">==</span> y_train).mean()</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"A threshold of </span><span class="sc">{</span>t<span class="sc">:.2f}</span><span class="ss"> gives an accuracy of </span><span class="sc">{</span>acc<span class="sc">:.2f}</span><span class="ss"> and an average profit of </span><span class="sc">{</span>profit<span class="sc">:.0f}</span><span class="ss">."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
-A threshold of 0.00 gives an accuracy of 0.81 and an average profit of -7866664.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
+<pre><code>A threshold of 0.00 gives an accuracy of 0.81 and an average profit of -7866664.
 A threshold of 0.05 gives an accuracy of 0.80 and an average profit of -9650146.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.10 gives an accuracy of 0.80 and an average profit of -11659056.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.15 gives an accuracy of 0.80 and an average profit of -13955409.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.20 gives an accuracy of 0.80 and an average profit of -15162766.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.25 gives an accuracy of 0.79 and an average profit of -16754399.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.30 gives an accuracy of 0.79 and an average profit of -17931599.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.35 gives an accuracy of 0.79 and an average profit of -19022470.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.40 gives an accuracy of 0.79 and an average profit of -19671379.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.45 gives an accuracy of 0.79 and an average profit of -20259539.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.50 gives an accuracy of 0.79 and an average profit of -20751030.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.55 gives an accuracy of 0.79 and an average profit of -21333027.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.60 gives an accuracy of 0.79 and an average profit of -22013949.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.65 gives an accuracy of 0.79 and an average profit of -22568274.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.70 gives an accuracy of 0.79 and an average profit of -22936382.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.75 gives an accuracy of 0.79 and an average profit of -23200133.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.80 gives an accuracy of 0.79 and an average profit of -23639568.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.85 gives an accuracy of 0.79 and an average profit of -23760256.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.90 gives an accuracy of 0.79 and an average profit of -23903334.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 0.95 gives an accuracy of 0.79 and an average profit of -24068266.
-1        0.0
-2        0.0
-3        0.0
-4        0.0
-6        0.0
-        ... 
-26059    0.0
-26060    0.0
-26061    0.0
-26062    0.0
-26063    0.0
-Name: score, Length: 22907, dtype: float64
 A threshold of 1.00 gives an accuracy of 0.79 and an average profit of -24102760.</code></pre>
 </div>
 </div>

@@ -194,16 +194,17 @@ background-size: cover;
 
 <section id="blog-post-optimal-decision-making" class="level1">
 <h1>Blog Post: ‘Optimal’ Decision Making</h1>
+<p>In this blog post, I aim to analyze data regarding the likelihood that the bank will grant a loan based on a group of personal attributes. First, I will find explore the data set to observe trends, and then I will determine the best attributes for successfully predicted whether a borrower will default on a loan. Then, I will build a model and determine an ideal threshold before analyzing the test data. Finally, I will observe the accuracy and profit with which my model performs on the test data from the point of view of the bank and the borrower.</p>
 <p>Once again, to begin, the training data must be accessed.</p>
-<div id="cell-1" class="cell" data-execution_count="1">
+<div id="cell-1" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/PhilChodrow/ml-notes/main/data/credit-risk/train.csv"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df_train <span class="op">=</span> pd.read_csv(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here’s a look at the data:</p>
-<div id="cell-3" class="cell" data-execution_count="2">
+<div id="cell-3" class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_train.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="42">
 <div>
 
 
@@ -308,7 +309,7 @@ background-size: cover;
 </div>
 </div>
 <p>Time to clean the data and take another look. I won’t one hot encode the columns yet, because I’m going to use some of them to explore the data set.</p>
-<div id="cell-5" class="cell" data-execution_count="3">
+<div id="cell-5" class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>le.fit(df_train[<span class="st">'loan_status'</span>])</span>
@@ -323,7 +324,7 @@ background-size: cover;
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>X_train, y_train <span class="op">=</span> prepare_data(df_train)</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>X_train.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="43">
 <div>
 
 
@@ -418,11 +419,11 @@ background-size: cover;
 <section id="exploring-the-data" class="level3">
 <h3 class="anchored" data-anchor-id="exploring-the-data">Exploring the Data</h3>
 <p>Let’s get familiar with some of the attributes and decide which ones might be helpful to predict whether someone defaulted on a loan or not.</p>
-<div id="cell-7" class="cell" data-execution_count="4">
+<div id="cell-7" class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-8" class="cell" data-execution_count="5">
+<div id="cell-8" class="cell" data-execution_count="45">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> X_train[<span class="st">'person_home_ownership'</span>]</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X_train[<span class="st">'loan_percent_income'</span>]</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -441,7 +442,8 @@ background-size: cover;
 </div>
 </div>
 </div>
-<div id="cell-9" class="cell" data-execution_count="6">
+<p>Looking at different types of home ownership, it looks like the percent income of the loan plays a really big role in whether or not it gets defaulted.</p>
+<div id="cell-10" class="cell" data-execution_count="46">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> X_train[<span class="st">'loan_percent_income'</span>]</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X_train[<span class="st">'loan_int_rate'</span>]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -460,9 +462,10 @@ background-size: cover;
 </div>
 </div>
 </div>
-<div id="cell-10" class="cell" data-execution_count="7">
+<p>Well, unsurprisingly, it looks like the chance that a loan is fully repaid is increased as the interest rate falls, and as the percentage of a person’s income falls.</p>
+<div id="cell-12" class="cell" data-execution_count="47">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>X_train.groupby([y_train, <span class="st">'cb_person_default_on_file'</span>])[[<span class="st">'person_emp_length'</span>, <span class="st">'cb_person_cred_hist_length'</span>]].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="47">
 <div>
 
 
@@ -510,14 +513,15 @@ background-size: cover;
 </div>
 </div>
 </div>
+<p>People who repaid the loan fully have generally been employed for a bit longer. I was surprised by how little difference it made to have a previous default on file. Also, while credit history length decreased slightly for loans that were defaulted, it didn’t seem to be by a significant amount.</p>
 </section>
 <section id="building-a-model" class="level3">
 <h3 class="anchored" data-anchor-id="building-a-model">Building a Model</h3>
 <p>Now that I’m ready to start modeling, I’ll go ahead an one hot encode any qualitative columns.</p>
-<div id="cell-13" class="cell" data-execution_count="8">
+<div id="cell-15" class="cell" data-execution_count="48">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(X_train)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>X_train.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="48">
 <div>
 
 
@@ -664,7 +668,7 @@ background-size: cover;
 </div>
 </div>
 <p>I’m going to try recursive feature elimination to assign weights to different features in the training data and select the best ones.</p>
-<div id="cell-15" class="cell" data-execution_count="9">
+<div id="cell-17" class="cell" data-execution_count="49">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> RFE</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -673,22 +677,22 @@ background-size: cover;
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> RFE(estimator, n_features_to_select<span class="op">=</span><span class="dv">3</span>, step<span class="op">=</span><span class="dv">1</span>).fit(X_train, y_train)</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>cols_rfe <span class="op">=</span> cols.get_feature_names_out()</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>cols_rfe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="49">
 <pre><code>array(['person_income', 'loan_amnt', 'loan_int_rate'], dtype=object)</code></pre>
 </div>
 </div>
-<div id="cell-16" class="cell" data-execution_count="10">
+<div id="cell-18" class="cell" data-execution_count="50">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>lr_rfe <span class="op">=</span> LogisticRegression().fit(X_train[cols_rfe], y_train)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>cv_scores_rfe <span class="op">=</span> cross_val_score(lr_rfe, X_train[cols_rfe], y_train, cv<span class="op">=</span><span class="dv">5</span>).mean()</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>cv_scores_rfe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="50">
 <pre><code>0.8117172718507574</code></pre>
 </div>
 </div>
-<div id="cell-17" class="cell" data-execution_count="11">
+<div id="cell-19" class="cell" data-execution_count="51">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectKBest</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> mutual_info_classif</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -696,23 +700,23 @@ background-size: cover;
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>cols.fit_transform(X_train, y_train)</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>cols_skb <span class="op">=</span> cols.get_feature_names_out()</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>cols_skb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="51">
 <pre><code>array(['person_income', 'loan_int_rate', 'loan_percent_income'],
       dtype=object)</code></pre>
 </div>
 </div>
-<div id="cell-18" class="cell" data-execution_count="12">
+<div id="cell-20" class="cell" data-execution_count="52">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>lr_skb <span class="op">=</span> LogisticRegression().fit(X_train[cols_skb], y_train)</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>cv_scores_skb <span class="op">=</span> cross_val_score(lr_skb, X_train[cols_skb], y_train, cv<span class="op">=</span><span class="dv">5</span>).mean()</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>cv_scores_skb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="52">
 <pre><code>0.8021563455835603</code></pre>
 </div>
 </div>
-<div id="cell-19" class="cell" data-execution_count="13">
+<div id="cell-21" class="cell" data-execution_count="53">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> LinearSVC</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectFromModel</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -721,42 +725,42 @@ background-size: cover;
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>x_new <span class="op">=</span> model.transform(X_train)</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>cols_svc <span class="op">=</span> model.get_feature_names_out()</span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>cols_svc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="53">
 <pre><code>array(['person_age', 'loan_amnt', 'loan_int_rate'], dtype=object)</code></pre>
 </div>
 </div>
-<div id="cell-20" class="cell" data-execution_count="14">
+<div id="cell-22" class="cell" data-execution_count="54">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>lr_svc <span class="op">=</span> LogisticRegression().fit(X_train[cols_svc], y_train)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>cv_scores_svc <span class="op">=</span> cross_val_score(lr_svc, X_train[cols_svc], y_train, cv<span class="op">=</span><span class="dv">5</span>).mean()</span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>cv_scores_svc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="54">
 <pre><code>0.7949095723125648</code></pre>
 </div>
 </div>
 <p>Looks like RFE worked the best to select features so I’ll stick with person_income, loan_int_rate, and loan_percent_income as the attributes for the remainder of the project.</p>
-<div id="cell-22" class="cell" data-execution_count="15">
+<div id="cell-24" class="cell" data-execution_count="55">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> lr_rfe.coef_.T</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>w</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="55">
 <pre><code>array([[-4.05735976e-05],
        [ 1.06558819e-04],
        [ 9.49045880e-08]])</code></pre>
 </div>
 </div>
-<div id="cell-23" class="cell" data-execution_count="16">
+<div id="cell-25" class="cell" data-execution_count="56">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_score(X, w):</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> X<span class="op">@</span>w</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-24" class="cell" data-execution_count="17">
+<div id="cell-26" class="cell" data-execution_count="57">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>X_train[<span class="st">'score'</span>] <span class="op">=</span> calc_score(X_train[cols_rfe], w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="finding-a-threshold" class="level3">
 <h3 class="anchored" data-anchor-id="finding-a-threshold">Finding a threshold</h3>
-<div id="cell-26" class="cell" data-execution_count="28">
+<div id="cell-28" class="cell" data-execution_count="58">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create columns for the profit of the bank if the loan is not defaulted and the cost if it is</span></span>
@@ -766,7 +770,7 @@ background-size: cover;
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>profit <span class="op">=</span> []</span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>acc <span class="op">=</span> []</span>
 <span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">21</span>):</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">41</span>):</span>
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#if score &lt;= t, they get the loan</span></span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> X_train[<span class="st">'score'</span>] <span class="op">&gt;</span> t</span>
 <span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
@@ -778,33 +782,131 @@ background-size: cover;
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    profit.append((((y_pred <span class="op">!=</span> y_train) <span class="op">*</span> (y_pred <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> (<span class="op">-</span>X_train[<span class="st">'cost'</span>])) <span class="op">+</span> ((y_pred <span class="op">==</span> y_train) <span class="op">*</span> (y_pred <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> X_train[<span class="st">'profit'</span>])).mean())</span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    acc.append((y_pred <span class="op">==</span> y_train).mean())</span>
 <span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>t_best <span class="op">=</span> <span class="op">-</span><span class="dv">1</span> <span class="op">+</span> np.argmax(np.array(profit)) <span class="op">*</span> <span class="fl">0.05</span></span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"A threshold of </span><span class="sc">{</span>t_best<span class="sc">:.2f}</span><span class="ss"> gives the maximum profit of $</span><span class="sc">{</span>np<span class="sc">.</span>array(profit)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.0f}</span><span class="ss"> per borrower and an accuracy of </span><span class="sc">{</span>acc[np.argmax(np.array(profit))]<span class="op">*</span><span class="dv">100</span><span class="sc">:.0f}</span><span class="ss">%."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="co"># making a plot of the threshold data from above loop</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>plt.plot(np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">41</span>), profit)</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Profit vs. Threshold"</span>)</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Threshold"</span>)</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Profit per Borrower"</span>)</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>t_best <span class="op">=</span> <span class="op">-</span><span class="dv">2</span> <span class="op">+</span> np.argmax(np.array(profit)) <span class="op">*</span> <span class="fl">0.05</span></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"A threshold of </span><span class="sc">{</span>t_best<span class="sc">:.2f}</span><span class="ss"> gives the maximum profit of $</span><span class="sc">{</span>np<span class="sc">.</span>array(profit)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.2f}</span><span class="ss"> per borrower and an accuracy of </span><span class="sc">{</span>acc[np.argmax(np.array(profit))]<span class="op">*</span><span class="dv">100</span><span class="sc">:.0f}</span><span class="ss">%."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BP2_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
 <div class="cell-output cell-output-stdout">
-<pre><code>A threshold of -0.70 gives the maximum profit of $608 per borrower and an accuracy of 77%.</code></pre>
+<pre><code>A threshold of -0.70 gives the maximum profit of $608.31 per borrower and an accuracy of 77%.</code></pre>
 </div>
 </div>
-<div id="cell-27" class="cell" data-execution_count="24">
+<p>Looking at the plot, we see that from the smallest threshold of -2, the profit rises slowly until it reaches a peak of just over $600 at t = -0.70 and then plummets steeply.</p>
+</section>
+<section id="evaluating-the-model-from-the-banks-perspective" class="level2">
+<h2 class="anchored" data-anchor-id="evaluating-the-model-from-the-banks-perspective">Evaluating the model from the bank’s perspective</h2>
+<div id="cell-30" class="cell" data-execution_count="59">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/PhilChodrow/ml-notes/main/data/credit-risk/test.csv"</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>df_test <span class="op">=</span> pd.read_csv(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-28" class="cell" data-execution_count="25">
+<div id="cell-31" class="cell" data-execution_count="60">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>X_test, y_test <span class="op">=</span> prepare_data(df_test)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>X_test[<span class="st">'score'</span>] <span class="op">=</span> calc_score(X_test[cols_rfe], w)</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>X_test[<span class="st">'profit'</span>] <span class="op">=</span> X_test[<span class="st">"loan_amnt"</span>]<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.25</span><span class="op">*</span>X_test[<span class="st">"loan_int_rate"</span>] <span class="op">*</span> <span class="fl">0.01</span>)<span class="op">**</span><span class="dv">10</span> <span class="op">-</span> X_test[<span class="st">"loan_amnt"</span>]</span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>X_test[<span class="st">'cost'</span>] <span class="op">=</span> X_test[<span class="st">"loan_amnt"</span>]<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.25</span><span class="op">*</span>X_test[<span class="st">"loan_int_rate"</span>] <span class="op">*</span> <span class="fl">0.01</span>)<span class="op">*</span><span class="dv">3</span> <span class="op">-</span> <span class="fl">1.7</span><span class="op">*</span>X_test[<span class="st">"loan_amnt"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-29" class="cell" data-execution_count="27">
+<div id="cell-32" class="cell" data-execution_count="64">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>y_pred_test <span class="op">=</span> X_test[<span class="st">'score'</span>] <span class="op">&gt;</span> t_best</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>avg_test_profit <span class="op">=</span> ((((y_pred_test <span class="op">!=</span> y_test) <span class="op">*</span> (y_pred_test <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> (<span class="op">-</span>X_test[<span class="st">'cost'</span>])) <span class="op">+</span> ((y_pred_test <span class="op">==</span> y_test) <span class="op">*</span> (y_pred_test <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> X_test[<span class="st">'profit'</span>])).mean())</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>test_acc <span class="op">=</span> ((y_pred_test <span class="op">==</span> y_test).mean())</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"A threshold of </span><span class="sc">{</span>t_best<span class="sc">:.2f}</span><span class="ss"> on the test data set gives an average profit of $</span><span class="sc">{</span>avg_test_profit<span class="sc">:.2f}</span><span class="ss"> and an accuracy of </span><span class="sc">{</span>test_acc<span class="op">*</span><span class="dv">100</span><span class="sc">:.0f}</span><span class="ss">%."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"A threshold of </span><span class="sc">{</span>t_best<span class="sc">:.2f}</span><span class="ss"> on the test data set gives an average profit of $</span><span class="sc">{</span>avg_test_profit<span class="sc">:.2f}</span><span class="ss"> per borrower and an accuracy of </span><span class="sc">{</span>test_acc<span class="op">*</span><span class="dv">100</span><span class="sc">:.0f}</span><span class="ss">%."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>A threshold of -0.70 on the test data set gives an average profit of $472.68 and an accuracy of 77%.</code></pre>
+<pre><code>A threshold of -0.70 on the test data set gives an average profit of $472.68 per borrower and an accuracy of 77%.</code></pre>
 </div>
 </div>
+<p>Honestly, I feel pretty good about this. The expected profit for the test set is a bit over $150 less per person than that of the training data set. Additionally, the accuracy is exactly the same - yay!</p>
+</section>
+<section id="and-the-borrowers-perspective" class="level2">
+<h2 class="anchored" data-anchor-id="and-the-borrowers-perspective">… and the borrower’s perspective?</h2>
+<div id="cell-34" class="cell" data-execution_count="62">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ages <span class="op">=</span> X_test[<span class="st">'person_age'</span>].unique()</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>ages.sort()</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>pred_d_rates <span class="op">=</span> []</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>actual_d_rates <span class="op">=</span> []</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> a <span class="kw">in</span> ages:</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    pred_d_rates.append((y_pred_test <span class="op">*</span> (a <span class="op">==</span> X_test[<span class="st">'person_age'</span>])).mean() <span class="op">*</span> <span class="dv">100</span>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    actual_d_rates.append((y_test <span class="op">*</span> (a <span class="op">==</span> X_test[<span class="st">'person_age'</span>])).mean() <span class="op">*</span> <span class="dv">100</span>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>ax.plot(ages, pred_d_rates, label<span class="op">=</span><span class="st">"Predicted"</span>)</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>ax.plot(ages, actual_d_rates, label<span class="op">=</span><span class="st">'Actual'</span>)</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Percent Default Rate"</span>)</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Age"</span>)</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>ax.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BP2_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It looks like the bank predicts a much higher rate of default for younger folks. This has a particularly strong impact on people in their 20s, but also seems to have some impact on people in their 30. As seen by the visual above, this does correlate reasonably well with an increased chance of an actual default among these ages.</p>
+<div id="cell-36" class="cell" data-execution_count="82">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>X_test[<span class="st">'y_test'</span>] <span class="op">=</span> y_test</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>X_test[<span class="st">'y_pred_test'</span>] <span class="op">=</span> y_pred_test</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>mean_values <span class="op">=</span> X_test.groupby(<span class="st">'loan_intent'</span>).agg({<span class="st">'y_test'</span>: <span class="st">'mean'</span>, <span class="st">'y_pred_test'</span>: <span class="st">'mean'</span>})</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>bar_width <span class="op">=</span> <span class="fl">0.35</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>index <span class="op">=</span> np.arange(<span class="bu">len</span>(mean_values))</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>ax.bar(index, mean_values[<span class="st">'y_test'</span>], bar_width, label<span class="op">=</span><span class="st">'Actual'</span>)</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>ax.bar(index <span class="op">+</span> bar_width, mean_values[<span class="st">'y_pred_test'</span>], bar_width, label<span class="op">=</span><span class="st">'Predicted'</span>)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Loan Intent'</span>)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Mean Values'</span>)</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Mean of y_test and y_pred_test Values for Each Loan Intent'</span>)</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(index <span class="op">+</span> bar_width <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(mean_values.index)</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BP2_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot shows the actual and predicted mean rates of default based on loan intent. The higher a column is means the higher the chance of default, or the more data points where a default occurred (blue) or was predicted (orange), as defaulting is represented by 1 in this data set. We can see that medical loans have the highest predicted rate of default among all types of loan intent, which means medical loans are the least likely to be granted of any type of loan, or in other words, the most difficult to attain. In this category, its just a bit of an over-prediction of the actual rate of default. On the other hand, the rate of default for business ventures and education loans is steeply over predicted by the model compared to the actual rate.</p>
+<div id="cell-38" class="cell" data-execution_count="92">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>X_test[<span class="st">'inc_percentile'</span>] <span class="op">=</span> <span class="bu">round</span>(X_test[<span class="st">'person_income'</span>].rank(pct <span class="op">=</span> <span class="va">True</span>), <span class="dv">2</span>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>grouped_data <span class="op">=</span> X_test.groupby([<span class="st">'inc_percentile'</span>])[<span class="st">'y_pred_test'</span>].mean()</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>grouped_data <span class="op">=</span> pd.DataFrame(grouped_data)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.scatterplot(data<span class="op">=</span>grouped_data, x<span class="op">=</span><span class="st">'y_pred_test'</span>, y<span class="op">=</span><span class="st">'inc_percentile'</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel <span class="op">=</span> <span class="st">"Predicted Default Rate"</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(ylabel <span class="op">=</span> <span class="st">"Income Percentile"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BP2_files/figure-html/cell-25-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This is… well, more or less the trend I expected. As the income percentile increases, so does the chance that the bank grants them a loan. This is seen by the more or less inverse relationship on the plot above.</p>
+<p>In this blog post, I learned a lot about how difficult it can be to manipulate data with groupby functions to create effective plots. Keeping the number of points to a minimum can help make a clear point and avoid diluting with substantial amounts of noise. One technique to do this is splitting data up into percentiles. I also learned one method to find a good threshold. Finally, I learned that younger folks have more difficulty getting a loan (which makes some sense given their increased risk of default), that medical loans are the most difficult to get, and that business venture and education loans are the categories in which the bank most over-predicts the chance of default. Also, a higher income is a strong contributing factor to being granted a loan.</p>
+<p>As mentioned earlier, it can be incredibly difficult to get a medical loan. In my opinion (supported by the middle view of fairness of Barocas, Hardt, and Narayanan), this is unfair. As they state, “this view holds that the decision makers have an obligation to avoid perpetuating injustice.” Often times, individuals can be born with medical conditions. This is completely out of their control, and doesn’t necessarily guarantee that they have the economic capital to pay for continuous treatment of said disease. In fact, I’d assume that there is a higher chance of being born into a high-risk medical group in lower income brackets, and by this logic, the middle view of fairness is blatantly violated by the difficulty to access medical loans regardless of whether they are paid back.</p>
 
 
 </section>

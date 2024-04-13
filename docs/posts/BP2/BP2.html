@@ -192,18 +192,18 @@ background-size: cover;
 
 
 
-<section id="blog-post-optimal-decision-making" class="level3">
-<h3 class="anchored" data-anchor-id="blog-post-optimal-decision-making">Blog Post: ‘Optimal’ Decision Making</h3>
+<section id="blog-post-optimal-decision-making" class="level1">
+<h1>Blog Post: ‘Optimal’ Decision Making</h1>
 <p>Once again, to begin, the training data must be accessed.</p>
-<div id="cell-1" class="cell" data-execution_count="2">
+<div id="cell-1" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/PhilChodrow/ml-notes/main/data/credit-risk/train.csv"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df_train <span class="op">=</span> pd.read_csv(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here’s a look at the data:</p>
-<div id="cell-3" class="cell" data-execution_count="3">
+<div id="cell-3" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_train.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
@@ -308,7 +308,7 @@ background-size: cover;
 </div>
 </div>
 <p>Time to clean the data and take another look. I won’t one hot encode the columns yet, because I’m going to use some of them to explore the data set.</p>
-<div id="cell-5" class="cell" data-execution_count="4">
+<div id="cell-5" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>le.fit(df_train[<span class="st">'loan_status'</span>])</span>
@@ -323,7 +323,7 @@ background-size: cover;
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>X_train, y_train <span class="op">=</span> prepare_data(df_train)</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>X_train.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -415,15 +415,14 @@ background-size: cover;
 </div>
 </div>
 </div>
-</section>
-<section id="exploring-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="exploring-the-data">Exploring the Data</h2>
+<section id="exploring-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="exploring-the-data">Exploring the Data</h3>
 <p>Let’s get familiar with some of the attributes and decide which ones might be helpful to predict whether someone defaulted on a loan or not.</p>
-<div id="cell-7" class="cell" data-execution_count="5">
+<div id="cell-7" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-8" class="cell" data-execution_count="6">
+<div id="cell-8" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> X_train[<span class="st">'person_home_ownership'</span>]</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X_train[<span class="st">'loan_percent_income'</span>]</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -442,7 +441,7 @@ background-size: cover;
 </div>
 </div>
 </div>
-<div id="cell-9" class="cell" data-execution_count="7">
+<div id="cell-9" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> X_train[<span class="st">'loan_percent_income'</span>]</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X_train[<span class="st">'loan_int_rate'</span>]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -461,9 +460,9 @@ background-size: cover;
 </div>
 </div>
 </div>
-<div id="cell-10" class="cell" data-execution_count="8">
+<div id="cell-10" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>X_train.groupby([y_train, <span class="st">'cb_person_default_on_file'</span>])[[<span class="st">'person_emp_length'</span>, <span class="st">'cb_person_cred_hist_length'</span>]].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
@@ -511,13 +510,14 @@ background-size: cover;
 </div>
 </div>
 </div>
+</section>
 <section id="building-a-model" class="level3">
 <h3 class="anchored" data-anchor-id="building-a-model">Building a Model</h3>
 <p>Now that I’m ready to start modeling, I’ll go ahead an one hot encode any qualitative columns.</p>
-<div id="cell-13" class="cell" data-execution_count="9">
+<div id="cell-13" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(X_train)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>X_train.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
 
@@ -664,7 +664,7 @@ background-size: cover;
 </div>
 </div>
 <p>I’m going to try recursive feature elimination to assign weights to different features in the training data and select the best ones.</p>
-<div id="cell-15" class="cell" data-execution_count="10">
+<div id="cell-15" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> RFE</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -673,22 +673,22 @@ background-size: cover;
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> RFE(estimator, n_features_to_select<span class="op">=</span><span class="dv">3</span>, step<span class="op">=</span><span class="dv">1</span>).fit(X_train, y_train)</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>cols_rfe <span class="op">=</span> cols.get_feature_names_out()</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>cols_rfe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>array(['person_income', 'loan_amnt', 'loan_int_rate'], dtype=object)</code></pre>
 </div>
 </div>
-<div id="cell-16" class="cell" data-execution_count="11">
+<div id="cell-16" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>lr_rfe <span class="op">=</span> LogisticRegression().fit(X_train[cols_rfe], y_train)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>cv_scores_rfe <span class="op">=</span> cross_val_score(lr_rfe, X_train[cols_rfe], y_train, cv<span class="op">=</span><span class="dv">5</span>).mean()</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>cv_scores_rfe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>0.8117172718507574</code></pre>
 </div>
 </div>
-<div id="cell-17" class="cell" data-execution_count="12">
+<div id="cell-17" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectKBest</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> mutual_info_classif</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -696,23 +696,23 @@ background-size: cover;
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>cols.fit_transform(X_train, y_train)</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>cols_skb <span class="op">=</span> cols.get_feature_names_out()</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>cols_skb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>array(['person_income', 'loan_int_rate', 'loan_percent_income'],
       dtype=object)</code></pre>
 </div>
 </div>
-<div id="cell-18" class="cell" data-execution_count="13">
+<div id="cell-18" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>lr_skb <span class="op">=</span> LogisticRegression().fit(X_train[cols_skb], y_train)</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>cv_scores_skb <span class="op">=</span> cross_val_score(lr_skb, X_train[cols_skb], y_train, cv<span class="op">=</span><span class="dv">5</span>).mean()</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>cv_scores_skb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>0.8021563455835603</code></pre>
 </div>
 </div>
-<div id="cell-19" class="cell" data-execution_count="14">
+<div id="cell-19" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> LinearSVC</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectFromModel</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -721,131 +721,88 @@ background-size: cover;
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>x_new <span class="op">=</span> model.transform(X_train)</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>cols_svc <span class="op">=</span> model.get_feature_names_out()</span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>cols_svc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>array(['person_age', 'loan_amnt', 'loan_int_rate'], dtype=object)</code></pre>
 </div>
 </div>
-<div id="cell-20" class="cell" data-execution_count="15">
+<div id="cell-20" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>lr_svc <span class="op">=</span> LogisticRegression().fit(X_train[cols_svc], y_train)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>cv_scores_svc <span class="op">=</span> cross_val_score(lr_svc, X_train[cols_svc], y_train, cv<span class="op">=</span><span class="dv">5</span>).mean()</span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>cv_scores_svc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>0.7949095723125648</code></pre>
 </div>
 </div>
 <p>Looks like RFE worked the best to select features so I’ll stick with person_income, loan_int_rate, and loan_percent_income as the attributes for the remainder of the project.</p>
-<div id="cell-22" class="cell" data-execution_count="16">
+<div id="cell-22" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> lr_rfe.coef_.T</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>w</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>array([[-4.05735976e-05],
        [ 1.06558819e-04],
        [ 9.49045880e-08]])</code></pre>
 </div>
 </div>
-<div id="cell-23" class="cell" data-execution_count="17">
+<div id="cell-23" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_score(X, w):</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> X<span class="op">@</span>w</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-24" class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>X_train[<span class="st">'score'</span>] <span class="op">=</span> calc_score(X_train[cols_rfe], w)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>X_train[<span class="st">'score'</span>].head(<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="34">
-<pre><code>1     -2.724145
-2     -0.435472
-3     -0.913722
-4     -0.552180
-6     -0.294372
-7     -1.078671
-8     -1.328416
-9     -0.866993
-10    -0.086189
-11    -0.080296
-12    -0.207142
-13    -4.709531
-14    -1.492597
-15    -0.059797
-16    -2.525174
-17    -2.025183
-18    -1.236856
-19    -2.458977
-20    -0.508184
-21    -1.859404
-22    -2.383166
-23    -0.983590
-24    -2.104489
-25     0.116204
-27    -1.457767
-28    -2.093814
-29    -0.827445
-30    -1.850373
-31    -3.275786
-32    -0.108589
-33    -2.864712
-34    -1.135210
-35     0.061924
-36    -1.133178
-37    -1.356546
-38    -2.512256
-39    -3.806445
-40    -1.368826
-41    -0.917605
-42    -0.545074
-43    -1.235283
-44    -0.888178
-45    -1.572517
-46    -2.458977
-47    -1.861047
-48    -2.606534
-49    -0.899814
-50     0.432424
-51   -11.106489
-52    -3.844350
-Name: score, dtype: float64</code></pre>
+<div id="cell-24" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>X_train[<span class="st">'score'</span>] <span class="op">=</span> calc_score(X_train[cols_rfe], w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div id="cell-25" class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>X_train[<span class="st">'profit'</span>] <span class="op">=</span> X_train[<span class="st">"loan_amnt"</span>]<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.25</span><span class="op">*</span>X_train[<span class="st">"loan_int_rate"</span>] <span class="op">*</span> <span class="fl">0.01</span>)<span class="op">**</span><span class="dv">10</span> <span class="op">-</span> X_train[<span class="st">"loan_amnt"</span>]</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>X_train[<span class="st">'cost'</span>] <span class="op">=</span> X_train[<span class="st">"loan_amnt"</span>]<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.25</span><span class="op">*</span>X_train[<span class="st">"loan_int_rate"</span>] <span class="op">*</span> <span class="fl">0.01</span>)<span class="op">*</span><span class="dv">3</span> <span class="op">-</span> <span class="fl">1.7</span><span class="op">*</span>X_train[<span class="st">"loan_amnt"</span>]</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># both equal to 1 is 0</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># both equal to 0 is +profit</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># y_pred = 1, y_train = 0 is 0</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># y_pred = 0, y_train = 1 is -cost</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">21</span>):</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> <span class="fl">1.0</span><span class="op">*</span>(X_train[<span class="st">'score'</span>] <span class="op">&gt;</span> t)</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#if score &lt;= t, they get the loan</span></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    profit <span class="op">=</span> (((y_pred <span class="op">!=</span> y_train) <span class="op">*</span> (y_pred <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> <span class="op">-</span>X_train[<span class="st">'cost'</span>]) <span class="op">+</span> ((y_pred <span class="op">==</span> y_train) <span class="op">*</span> (y_pred <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> X_train[<span class="st">'profit'</span>])).<span class="bu">sum</span>()</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    acc <span class="op">=</span> (y_pred <span class="op">==</span> y_train).mean()</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"A threshold of </span><span class="sc">{</span>t<span class="sc">:.2f}</span><span class="ss"> gives an accuracy of </span><span class="sc">{</span>acc<span class="sc">:.2f}</span><span class="ss"> and an average profit of </span><span class="sc">{</span>profit<span class="sc">:.0f}</span><span class="ss">."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="finding-a-threshold" class="level3">
+<h3 class="anchored" data-anchor-id="finding-a-threshold">Finding a threshold</h3>
+<div id="cell-26" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create columns for the profit of the bank if the loan is not defaulted and the cost if it is</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>X_train[<span class="st">'profit'</span>] <span class="op">=</span> X_train[<span class="st">"loan_amnt"</span>]<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.25</span><span class="op">*</span>X_train[<span class="st">"loan_int_rate"</span>] <span class="op">*</span> <span class="fl">0.01</span>)<span class="op">**</span><span class="dv">10</span> <span class="op">-</span> X_train[<span class="st">"loan_amnt"</span>]</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>X_train[<span class="st">'cost'</span>] <span class="op">=</span> X_train[<span class="st">"loan_amnt"</span>]<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.25</span><span class="op">*</span>X_train[<span class="st">"loan_int_rate"</span>] <span class="op">*</span> <span class="fl">0.01</span>)<span class="op">*</span><span class="dv">3</span> <span class="op">-</span> <span class="fl">1.7</span><span class="op">*</span>X_train[<span class="st">"loan_amnt"</span>]</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>profit <span class="op">=</span> []</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>acc <span class="op">=</span> []</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">21</span>):</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#if score &lt;= t, they get the loan</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> X_train[<span class="st">'score'</span>] <span class="op">&gt;</span> t</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># when y_pred and y_train equal one, the bank correctly predicted a default and profit is 0</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># when y_pred and y_train equal zero, the bank correctly predicted a repaid loan and profit +X_train['profit']</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># when y_pred = 1, y_train = 0 the bank predicted a default and did not give the loan, so profit is 0</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># when y_pred = 0, y_train = 1 the bank incorrectly predicted the loan would be repaid, so profit is -X_train['cost']</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    profit.append((((y_pred <span class="op">!=</span> y_train) <span class="op">*</span> (y_pred <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> (<span class="op">-</span>X_train[<span class="st">'cost'</span>])) <span class="op">+</span> ((y_pred <span class="op">==</span> y_train) <span class="op">*</span> (y_pred <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> X_train[<span class="st">'profit'</span>])).mean())</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    acc.append((y_pred <span class="op">==</span> y_train).mean())</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>t_best <span class="op">=</span> <span class="op">-</span><span class="dv">1</span> <span class="op">+</span> np.argmax(np.array(profit)) <span class="op">*</span> <span class="fl">0.05</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"A threshold of </span><span class="sc">{</span>t_best<span class="sc">:.2f}</span><span class="ss"> gives the maximum profit of $</span><span class="sc">{</span>np<span class="sc">.</span>array(profit)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.0f}</span><span class="ss"> per borrower and an accuracy of </span><span class="sc">{</span>acc[np.argmax(np.array(profit))]<span class="op">*</span><span class="dv">100</span><span class="sc">:.0f}</span><span class="ss">%."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>A threshold of 0.00 gives an accuracy of 0.81 and an average profit of -7866664.
-A threshold of 0.05 gives an accuracy of 0.80 and an average profit of -9650146.
-A threshold of 0.10 gives an accuracy of 0.80 and an average profit of -11659056.
-A threshold of 0.15 gives an accuracy of 0.80 and an average profit of -13955409.
-A threshold of 0.20 gives an accuracy of 0.80 and an average profit of -15162766.
-A threshold of 0.25 gives an accuracy of 0.79 and an average profit of -16754399.
-A threshold of 0.30 gives an accuracy of 0.79 and an average profit of -17931599.
-A threshold of 0.35 gives an accuracy of 0.79 and an average profit of -19022470.
-A threshold of 0.40 gives an accuracy of 0.79 and an average profit of -19671379.
-A threshold of 0.45 gives an accuracy of 0.79 and an average profit of -20259539.
-A threshold of 0.50 gives an accuracy of 0.79 and an average profit of -20751030.
-A threshold of 0.55 gives an accuracy of 0.79 and an average profit of -21333027.
-A threshold of 0.60 gives an accuracy of 0.79 and an average profit of -22013949.
-A threshold of 0.65 gives an accuracy of 0.79 and an average profit of -22568274.
-A threshold of 0.70 gives an accuracy of 0.79 and an average profit of -22936382.
-A threshold of 0.75 gives an accuracy of 0.79 and an average profit of -23200133.
-A threshold of 0.80 gives an accuracy of 0.79 and an average profit of -23639568.
-A threshold of 0.85 gives an accuracy of 0.79 and an average profit of -23760256.
-A threshold of 0.90 gives an accuracy of 0.79 and an average profit of -23903334.
-A threshold of 0.95 gives an accuracy of 0.79 and an average profit of -24068266.
-A threshold of 1.00 gives an accuracy of 0.79 and an average profit of -24102760.</code></pre>
+<pre><code>A threshold of -0.70 gives the maximum profit of $608 per borrower and an accuracy of 77%.</code></pre>
+</div>
+</div>
+<div id="cell-27" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/PhilChodrow/ml-notes/main/data/credit-risk/test.csv"</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>df_test <span class="op">=</span> pd.read_csv(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-28" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>X_test, y_test <span class="op">=</span> prepare_data(df_test)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>X_test[<span class="st">'score'</span>] <span class="op">=</span> calc_score(X_test[cols_rfe], w)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>X_test[<span class="st">'profit'</span>] <span class="op">=</span> X_test[<span class="st">"loan_amnt"</span>]<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.25</span><span class="op">*</span>X_test[<span class="st">"loan_int_rate"</span>] <span class="op">*</span> <span class="fl">0.01</span>)<span class="op">**</span><span class="dv">10</span> <span class="op">-</span> X_test[<span class="st">"loan_amnt"</span>]</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>X_test[<span class="st">'cost'</span>] <span class="op">=</span> X_test[<span class="st">"loan_amnt"</span>]<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.25</span><span class="op">*</span>X_test[<span class="st">"loan_int_rate"</span>] <span class="op">*</span> <span class="fl">0.01</span>)<span class="op">*</span><span class="dv">3</span> <span class="op">-</span> <span class="fl">1.7</span><span class="op">*</span>X_test[<span class="st">"loan_amnt"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-29" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>y_pred_test <span class="op">=</span> X_test[<span class="st">'score'</span>] <span class="op">&gt;</span> t_best</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>avg_test_profit <span class="op">=</span> ((((y_pred_test <span class="op">!=</span> y_test) <span class="op">*</span> (y_pred_test <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> (<span class="op">-</span>X_test[<span class="st">'cost'</span>])) <span class="op">+</span> ((y_pred_test <span class="op">==</span> y_test) <span class="op">*</span> (y_pred_test <span class="op">==</span> <span class="dv">0</span>) <span class="op">*</span> X_test[<span class="st">'profit'</span>])).mean())</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>test_acc <span class="op">=</span> ((y_pred_test <span class="op">==</span> y_test).mean())</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"A threshold of </span><span class="sc">{</span>t_best<span class="sc">:.2f}</span><span class="ss"> on the test data set gives an average profit of $</span><span class="sc">{</span>avg_test_profit<span class="sc">:.2f}</span><span class="ss"> and an accuracy of </span><span class="sc">{</span>test_acc<span class="op">*</span><span class="dv">100</span><span class="sc">:.0f}</span><span class="ss">%."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A threshold of -0.70 on the test data set gives an average profit of $472.68 and an accuracy of 77%.</code></pre>
 </div>
 </div>
 

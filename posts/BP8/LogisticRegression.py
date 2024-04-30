@@ -53,6 +53,15 @@ class LogisticRegression(LinearModel):
         grad = (sigma - y) * X
 
         return grad.mean(dim=0)
+    
+    def hessian(self, X):
+        s = self.score(X)
+        sigma = self.sigmoid(s)
+
+        d = sigma * (1 - sigma)
+        d = torch.diag(d.ravel())
+
+        return X.T @ (d @ X)
 
 
 class GradientDescentOptimizer:
@@ -73,10 +82,9 @@ class GradientDescentOptimizer:
         self.model.w = temp
 
 class NewtonOptimizer:
-    def __init__(self, model, w, w_prev):
-        self.model = model
+    def __init__(self, model, w):
+        self.model = model 
         self.w = w
-        self.w_prev = w_prev
 
-        def step(self, X, y, h, alpha):
-            self.w = w - alpha * torch.inverse(h) 
+    def step(self, X, y, alpha):
+        self.model.w = self.model.w - alpha * (torch.inverse(self.model.hessian(X)) @ self.model.grad(X, y))

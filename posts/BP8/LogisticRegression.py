@@ -54,7 +54,12 @@ class LogisticRegression(LinearModel):
 
         return grad.mean(dim=0)
     
+    # calculates the hessian of empirical risk
     def hessian(self, X):
+        '''
+        Takes in data set X
+        Returns the hessian (second-derivative matrix) of empirical loss
+        '''
         s = self.score(X)
         sigma = self.sigmoid(s)
 
@@ -86,5 +91,10 @@ class NewtonOptimizer:
         self.model = model 
         self.w = w
 
+    # calculates one step of the logistic regression update
     def step(self, X, y, alpha):
+        '''
+        Takes in feature matrix X, target vector y, learning rate alpha
+        Updates w and w_prev based on parameters
+        '''
         self.model.w = self.model.w - alpha * (torch.inverse(self.model.hessian(X)) @ self.model.grad(X, y))

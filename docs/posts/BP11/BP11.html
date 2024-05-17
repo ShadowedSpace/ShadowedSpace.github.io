@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>My Awesome CSCI 0451 Blog - Blog Post 11: Deep Music Genre Classification</title>
+<title>My Awesome CSCI 0451 Blog - Blog Post: Deep Music Genre Classification</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -168,7 +168,7 @@ background-size: cover;
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Blog Post 11: Deep Music Genre Classification</h1>
+      <h1 class="title">Blog Post: Deep Music Genre Classification</h1>
                       </div>
   </div>
     
@@ -192,8 +192,8 @@ background-size: cover;
 
 
 
-<section id="blog-post-11-deep-music-genre-classification" class="level1">
-<h1>Blog Post 11: Deep Music Genre Classification</h1>
+<section id="blog-post-deep-music-genre-classification" class="level1">
+<h1>Blog Post: Deep Music Genre Classification</h1>
 <p>Well, I’ve been hoping to do a deep learning blog post all semester, so I’m really excited to give this one a shot! The first step will be to properly format the data, and then perform text vectorization, since lyrics are words, which cannot function as features. Then, I will collate batches. Finally, I will be prepared to create a model and evaluate its accuracy. I will create 3 models, one learning from just the lyrics, one learning from just the features, and one learning from both. Once the models have successfully performed better than the base rate, I will compare the accuracy across the three models to see which one would be the most promising to continue to work with.</p>
 <div id="cell-1" class="cell" data-execution_count="66">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>

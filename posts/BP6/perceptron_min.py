@@ -18,13 +18,20 @@ class Perceptron(LinearModel):
         return (1.0 * ((self.score(X) * y) < 0)).mean()
 
     def grad(self, X, y):
-        grad = ((self.score(X) * y) < 0) * y * X
-        return grad.mean(dim=0)
+        s = self.score(X)
+
+        mis_class = s * y <= 0
+        update_row = X * y[:,None]
+
+        update = update_row * mis_class[:,None]
+        
+        return torch.mean(update, 0)
 
 class PerceptronOptimizer:
-    def __init__(self, model):
+    def __init__(self, model, k = 1):
         self.model = model
+        self.k = k
     
-    def step(self, X, y):
+    def step(self, X, y, alpha):
         loss = self.model.loss(X, y)
-        self.model.w += self.model.grad(X, y).squeeze()
+        self.model.w += (alpha * self.model.grad(X, y).squeeze())

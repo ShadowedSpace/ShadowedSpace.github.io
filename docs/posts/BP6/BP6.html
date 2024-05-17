@@ -191,13 +191,14 @@ background-size: cover;
 
 <section id="blog-post-perceptron" class="level1">
 <h1>Blog Post: Perceptron</h1>
-<div id="cell-1" class="cell" data-execution_count="44">
+<p>In this blog post, I will explore the perceptron algorithm, one of the oldest classification algorithms. First, I will implement the perceptron algorithm, and then I will conduct a couple of experiments to ensure that it is working properly. The first experiment will confirm that the algorithm will converge to a loss of 0 on linearly separable data. The next experiment will show that given non-linearly separable data, the algorithm will continue iterating until it reaches a maximum number of iterations without ever converging. The final experiment will demonstrate that the perceptron can work in more than 2 dimensions. After that, I will implement minibatch perceptron. Before concluding, I will summarize my findings.</p>
+<div id="cell-1" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> perceptron <span class="im">import</span> Perceptron, PerceptronOptimizer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>The autoreload extension is already loaded. To reload it, use:
-  %reload_ext autoreload</code></pre>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> perceptron <span class="im">import</span> Perceptron, PerceptronOptimizer</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> perceptron_mini <span class="im">import</span> PerceptronMini, PerceptronOptimizerMini</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>ImportError: cannot import name 'PerceptronMini' from 'perceptron_mini' (c:\Users\Zoe Greenwald\ShadowedSpace.github.io\posts\BP6\perceptron_mini.py)</code></pre>
 </div>
 </div>
 <div id="cell-2" class="cell" data-execution_count="45">
@@ -421,6 +422,39 @@ background-size: cover;
 </figure>
 </div>
 </div>
+</div>
+<div id="cell-16" class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> perceptron_data(n_points <span class="op">=</span> <span class="dv">300</span>, noise <span class="op">=</span> <span class="fl">0.9</span>, p_dims<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># instantiate a model and an optimizer</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> Perceptron() </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>p.w <span class="op">=</span> torch.rand(X.size()[<span class="dv">1</span>])</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>opt <span class="op">=</span> PerceptronOptimizer(p)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># for keeping track of loss values</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>losses <span class="op">=</span> []</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> X.size()[<span class="dv">0</span>]</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>): <span class="co"># dangerous -- only terminates if data is linearly separable</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># not part of the update: just for tracking our progress    </span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> p.loss(X, y) </span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    losses.append(loss)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># pick a random data point</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> torch.randint(n, size <span class="op">=</span> (<span class="dv">1</span>,))</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    x_i <span class="op">=</span> X[[i],:]</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    y_i <span class="op">=</span> y[i]</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># perform a perceptron update using the random data point</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    opt.step(x_i, y_i)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>plt.plot(losses)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Iterations"</span>)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Loss"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>My guess would be that this data isn’t linearly separable due to the lack of convergence. The plot aligns more closely with that of the second experiment. However, I was interested to observe that the loss seemed to fluctuate a lot less with higher dimensions.</p>
 <p>In this blog post, I explored the perceptron algorithm to separate data. One important note about this algorithm is that if the data is not linearly separable, it will never converge! This means it is important to put a cap on the number of times it is run if you aren’t sure the data is linearly separable. In terms of implementing the Perceptron class, the gradient function, Perceptron.grad, is incredibly important. It first computes the scores for the input data X, and then calculates exp, an expression to indicate for which instances the model made incorrect predictions. Finally, it calculates the gradient of the loss function, multiplying by X and y to decide which direction the weights must be updated to improve. Finally, it returns the mean of the gradient over the 0th dimension. The runtime complexity of a single iteration of the perceptron algorithm is O(p) where p is the number of features. This comes from the gradient function. Following this time complexity, it seems that the runtime of perceptron relies on the number of features p, but not the number of data points n.</p>

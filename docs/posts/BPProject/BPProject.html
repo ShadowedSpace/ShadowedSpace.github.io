@@ -240,8 +240,10 @@ background-size: cover;
 </section>
 <section id="concluding-discussion" class="level3">
 <h3 class="anchored" data-anchor-id="concluding-discussion">Concluding Discussion</h3>
-<p><em>Your conclusion is the right time to assess:</em></p>
-<p><em>In what ways did our project work?</em> <em>Did we meet the goals that we set at the beginning of the project?</em> <em>How do our results compare to the results of others who have also studied similar problems?</em> <em>If we had more time, data, or computational resources, what might we do differently in order to improve further?</em></p>
+<p>I think, overall, our project was successful. We were able to find a large, publicly available dataset, convert it into a useable format, and then model it with logistic regression and a convolutional neural network. In the end, we were able to overcome the base rate of success of nv, a particularly frequently occurring diagnosis within the data set. This was accomplished with class weights and transfer learning.</p>
+<p>This dataset has been used in a number of competitions and research papers in which participants and authors were able to achieve accuracy in the high 90s, so although I would call our project a success, I think there is still a lot of opportunity for further development and improvement of our models.</p>
+<p>If we had more time, ideally, I would have liked to find or collect data that better represented a diverse range of skin tones with lesions. I think this is particularly important for image classification where different levels on contrast might impact correct diagnoses. There is already a lot of bias in medicine, and it’s important to actively work to counter that bias with new tools. We know that using biased and incomplete datasets and further systematize this bias, and as such it is our job to fight this systematization.</p>
+<p>I also would have liked to extend our analysis of the results we got in terms of looking at FPR/TPR/FNR/TNR and comparing these among separate diagnoses, specifically between those that are malignant and those that are not.</p>
 </section>
 <section id="group-contribution-statement" class="level3">
 <h3 class="anchored" data-anchor-id="group-contribution-statement">Group Contribution Statement</h3>
@@ -249,8 +251,9 @@ background-size: cover;
 </section>
 <section id="personal-reflection" class="level3">
 <h3 class="anchored" data-anchor-id="personal-reflection">Personal Reflection</h3>
-<p><em>At the very end of your blog post, in a few paragraphs, respond to the following questions:</em></p>
-<p><em>What did you learn from the process of researching, implementing, and communicating about your project?</em> <em>How do you feel about what you achieved? Did meet your initial goals? Did you exceed them or fall short? In what ways?</em> <em>In what ways will you carry the experience of working on this project into your next courses, career stages, or personal life?</em></p>
+<p>This project was a great opportunity for my learning. The first challenge for me was to select a dataset and narrow down my area of interest. Once we decided to focus on image classification, we spent a lot of time searching for a dataset with diversity of skin tone, and unfortunately weren’t able to find one that was publicly available. One of my biggest challenges was right at the beginning of the project, reading the images into a processable form. I struggled to convert them into numpy arrays and then tensors that could be used for neural networks, but I learned a lot about data manipulation through this process. The chance to implement a neural network with my group and then apply class weights and transfer learning was also a good learning opportunity for me, specifically to build upon my machine learning knowledge from this class, and apply it to a problem with great personal importance to me.</p>
+<p>I feel good about what we accomplished, but I also feel that with more time and resources, I would have liked to continue working on this model and improving its accuracy. Particularly with medical tools, high accuracy is important and incorrect diagnoses can have life or death impacts on patients and cause trauma for them and their families alike. This is true either when unnecessary treatment is given for an incorrect diagnosis to a healthy patient, and also when treatment is not provided quickly enough for a patient with a life-threatening condition.</p>
+<p>After receiving a cancer diagnosis last spring, I’ve become invested in understanding and researching cancer. This project gave me the opportunity to dive deeper into that passion, and is one example of how I can combine my interests in computer science and medicine in a career. I hope to continue working on projects like this in the future.</p>
 </section>
 <section id="sources" class="level3">
 <h3 class="anchored" data-anchor-id="sources">Sources</h3>
